@@ -12,6 +12,7 @@ export default defineComponent({
   components: { ItemsComponent, ButtonComponent, HeaderComponent, ItemComponent },
   setup() {
     const itemSelected = ref<ItemSelectedType>({})
+    const totalEmails = ref<number>(0)
     let textItem: string = ""
 
     const setSearch = (text: string) => {
@@ -22,10 +23,16 @@ export default defineComponent({
       itemSelected.value = item
     }
 
+    const setTotalEmails = (total: number) => {
+      totalEmails.value = total
+    }
+
     return {
       itemSelected,
       setItem,
-      setSearch
+      setSearch,
+      totalEmails,
+      setTotalEmails
     }
   }
 })
@@ -33,7 +40,7 @@ export default defineComponent({
 
 <template>
   <div class="min-h-full">
-    <HeaderComponent/>
+    <HeaderComponent :totalEmails="totalEmails"/>
 
     <header class="bg-white shadow">
       <div class="mx-auto max-w-7xl py-6 px-4 sm:px-6 lg:px-8">
@@ -54,7 +61,7 @@ export default defineComponent({
       <div class="mx-auto max-w-7xl py-2 md:py-6 sm:px-6 lg:px-8 md:grid md:grid-cols-7 md:gap-6 mainHeight">
         <div class="px-4 sm:px-0 mt-5 md:col-span-3 md:mt-0">
           <div class="overflow-auto rounded-lg border border-gray-200 shadow-md emailsHeight">
-            <ItemsComponent @setItem="setItem"/>
+            <ItemsComponent @setItem="setItem" :itemSelected="itemSelected" @setTotalEmails="setTotalEmails"/>
           </div>
         </div>
         <div class="md:col-span-4 px-4 sm:px-0 mt-5 md:mt-0">
@@ -72,6 +79,7 @@ export default defineComponent({
 .mainHeight {
   height: calc(100vh - 158px);
 }
+
 .emailsHeight {
   height: calc(100vh - 200px);
 }

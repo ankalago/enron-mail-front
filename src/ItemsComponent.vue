@@ -1,5 +1,10 @@
 <template>
-  <table class="w-full border-collapse bg-white text-left text-sm text-gray-500">
+  <div v-if="isLoading" class="h-full flex items-center justify-center text-gray-500 font-bold text-2xl">Loading...
+  </div>
+  <div v-else-if="isError" class="h-full flex items-center justify-center text-gray-500 font-bold text-2xl">An error has
+    occurred: {{ error }}
+  </div>
+  <table class="w-full border-collapse bg-white text-left text-sm text-gray-500" v-else-if="data">
     <thead class="bg-gray-50">
     <tr>
       <th scope="col" class="px-6 py-4 font-medium text-gray-900">Subject</th>
@@ -8,8 +13,9 @@
     </tr>
     </thead>
     <tbody class="divide-y divide-gray-100 border-t border-gray-100">
-    <tr class="hover:bg-gray-50 cursor-pointer" v-for="row in items" @click="$emit('setItem', row)">
-      <td class="flex gap-3 px-6 py-4 font-normal text-gray-900">
+    <tr class="hover:bg-gray-50 cursor-pointer" v-for="row in data" @click="$emit('setItem', row)"
+        :class="{ visited: row._timestamp === itemSelected._timestamp }">
+      <td class="flex gap-3 px-6 py-4 font-bold">
         {{ row.subject }}
       </td>
       <td class="px-6 py-4">
@@ -23,31 +29,48 @@
   </table>
 </template>
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, PropType } from 'vue';
 import { ItemSelectedType } from './entities/item';
+import { useQuery } from '@tanstack/vue-query';
 
-const item1: ItemSelectedType = {
-  from: "vic.gatto@owen2002.vanderbilt.edu",
-  to: "harry.arora@enron.com",
-  subject: "Thank You",
-  origin: "arora-h",
-  content: "Harry,\nThank you for taking time last week to meet with me and for arranging theother meetings as well.  I enjoyed our discussion and learning about thevarious opportunities within Enron.  I have been impressed with every groupat Enron.  I hope that we can keep in touch over the next few months.\nThank you again.\nSincerely,\n\nVic\n\nVic GattoOwen Graduate School of ManagementVanderbilt Universtiy(615) 292-7414vic.gatto@owen2002.vanderbilt.edu",
-}
-const item2: ItemSelectedType = {
-  from: "maksym.yegorychev@owen2002.vanderbilt.edu",
-  to: "harry.arora@enron.com",
-  subject: "time to talk",
-  origin: "arora-h",
-  content: "Dear Harry,\nI would like to talk to you about the decision Enron made regarding summerinternship and how I could improve my chances next time. Could you advise meon the time to call you?\nBR,\nMaksym Yegorychev.",
-}
-const items: ItemSelectedType[] = [item1, item2, item1, item1, item2, item1, item1, item2, item1, item1, item2, item1, item1, item2, item1, item1, item2, item1, item1, item2, item1]
+const fetcher = async (): Promise<ItemSelectedType[]> =>
+    await fetch('https://fbd9-186-42-1-142.ngrok.io/feed/arora-h').then((response) =>
+        response.json(),
+    )
+
 export default defineComponent({
   name: 'ItemsComponent',
-  emits: ['setItem'],
-  setup() {
-    return {
-      items,
+  emits: ['setItem', 'setTotalEmails'],
+  props: {
+    itemSelected: {
+      type: Object as PropType<ItemSelectedType>,
+      required: true
     }
+  },
+  watch: {
+    data(newItems) {
+      this.setTotalItems(newItems.length)
+    }
+  },
+  methods: {
+    async setTotalItems(total: number) {
+      this.$emit('setTotalEmails', total)
+    }
+  },
+  setup() {
+    const { isLoading, isError, isFetching, data, error, refetch } = useQuery({
+      queryKey: ['feed'],
+      queryFn: fetcher,
+      refetchOnWindowFocus: false
+    })
+
+    return { isLoading, isError, isFetching, data, error, refetch }
   }
 })
 </script>
+
+<style scoped>
+.visited {
+  @apply bg-rose-500 text-gray-100 !important;
+}
+</style>

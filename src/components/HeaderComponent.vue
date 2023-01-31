@@ -8,7 +8,7 @@
           </div>
           <div class="hidden md:block">
             <div class="ml-10 flex items-baseline space-x-4">
-              <h1 class="text-3xl font-bold tracking-tight text-gray-100">Mamuro Email</h1>
+              <h1 class="text-3xl font-bold tracking-tight text-gray-100">Mamuro Email ({{ totalEmails }})</h1>
             </div>
           </div>
         </div>
@@ -33,6 +33,9 @@ import InputComponent from './InputComponent.vue';
 
 export default {
   name: "HeaderComponent",
+  props: {
+    totalEmails: Number
+  },
   components: { InputComponent, Disclosure, EmailIcon, ButtonComponent }
 }
 </script>

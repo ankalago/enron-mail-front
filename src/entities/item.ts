@@ -4,4 +4,5 @@ export type ItemSelectedType = {
   origin?: string
   from?: string
   content?: string
+  _timestamp?: number
 };
