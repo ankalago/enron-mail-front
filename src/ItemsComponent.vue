@@ -13,7 +13,7 @@
     </tr>
     </thead>
     <tbody class="divide-y divide-gray-100 border-t border-gray-100">
-    <tr class="hover:bg-gray-50 cursor-pointer" v-for="row in data" @click="$emit('setItem', row)"
+    <tr class="hover:bg-gray-50 cursor-pointer" v-for="row in filterData" @click="$emit('setItem', row)"
         :class="{ visited: row._timestamp === itemSelected._timestamp }">
       <td class="flex gap-3 px-6 py-4 font-bold">
         {{ row.subject }}
@@ -45,26 +45,36 @@ export default defineComponent({
     itemSelected: {
       type: Object as PropType<ItemSelectedType>,
       required: true
-    }
+    },
+    textSearch: String
   },
   watch: {
-    data(newItems) {
+    data(newItems: ItemSelectedType[]) {
       this.setTotalItems(newItems.length)
-    }
+      this.filterData = newItems
+    },
+    textSearch(newTextSearch: string) {
+      const filterData = this.data?.filter(item => {
+        return item.content?.includes(newTextSearch)
+      })
+      this.filterData = filterData || []
+      this.setTotalItems(this.filterData.length)
+    },
   },
   methods: {
-    async setTotalItems(total: number) {
+    setTotalItems(total: number) {
       this.$emit('setTotalEmails', total)
     }
   },
   setup() {
+    const filterData: ItemSelectedType[] = [];
     const { isLoading, isError, isFetching, data, error, refetch } = useQuery({
       queryKey: ['feed'],
       queryFn: fetcher,
       refetchOnWindowFocus: false
     })
 
-    return { isLoading, isError, isFetching, data, error, refetch }
+    return { isLoading, isError, isFetching, data, error, refetch, filterData }
   }
 })
 </script>

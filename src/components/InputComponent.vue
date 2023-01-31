@@ -1,10 +1,23 @@
 <template>
-  <input type="text" name="company-website" id="company-website"
-         class="block w-full flex-1 rounded-none rounded-l-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-         placeholder="user (ex: arora-h)"/>
+  <input type="text"
+         class="block w-full flex-1 border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+         :placeholder="placeHolder" @input="handleChange"
+         :class="{ 'rounded-l-md': customClass === 'rounded-l-md', 'rounded-r-md': customClass === 'rounded-r-md', 'rounded-md': customClass === 'rounded-md', 'rounded-none': customClass === 'rounded-none' }"/>
 </template>
-<script>
-export default {
-  name: 'InputComponent'
-}
+<script lang="ts">
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+  name: 'InputComponent',
+  emits: ['customChange'],
+  props: {
+    placeHolder: String,
+    customClass: String
+  },
+  methods: {
+    handleChange(event: any) {
+      this.$emit("customChange", event.target.value)
+    }
+  }
+})
 </script>

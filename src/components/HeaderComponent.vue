@@ -15,7 +15,7 @@
         <div class="-mr-2 flex">
           <div class="col-span-3 sm:col-span-2">
             <div class="mt-1 flex rounded-md shadow-sm">
-              <InputComponent/>
+              <InputComponent :placeHolder="`user (ex: arora-h)`"/>
               <ButtonComponent text="Select"/>
             </div>
           </div>

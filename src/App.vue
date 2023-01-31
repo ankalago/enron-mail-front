@@ -6,17 +6,18 @@ import HeaderComponent from './components/HeaderComponent.vue';
 import ItemComponent from './components/ItemComponent.vue';
 import { ItemSelectedType } from './entities/item';
 import ItemsComponent from './ItemsComponent.vue';
+import InputComponent from './components/InputComponent.vue';
 
 export default defineComponent({
   name: 'App',
-  components: { ItemsComponent, ButtonComponent, HeaderComponent, ItemComponent },
+  components: { InputComponent, ItemsComponent, ButtonComponent, HeaderComponent, ItemComponent },
   setup() {
     const itemSelected = ref<ItemSelectedType>({})
     const totalEmails = ref<number>(0)
-    let textItem: string = ""
+    const textSearch = ref<string>("")
 
     const setSearch = (text: string) => {
-      textItem = text
+      textSearch.value = text
     }
 
     const setItem = (item: ItemSelectedType) => {
@@ -28,11 +29,12 @@ export default defineComponent({
     }
 
     return {
-      itemSelected,
       setItem,
-      setSearch,
+      itemSelected,
+      setTotalEmails,
       totalEmails,
-      setTotalEmails
+      setSearch,
+      textSearch
     }
   }
 })
@@ -47,10 +49,7 @@ export default defineComponent({
         <div class="grid grid-cols-2 gap-6">
           <div class="col-span-3">
             <div class="mt-1 flex rounded-md shadow-sm">
-              <input type="text" name="company-website" id="company-website"
-                     class="block w-full flex-1 rounded-none rounded-l-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                     placeholder="search"/>
-              <ButtonComponent text="Search"/>
+              <InputComponent :placeHolder="`search`" @customChange="setSearch" :customClass="`rounded-md`"/>
             </div>
           </div>
         </div>
@@ -61,7 +60,8 @@ export default defineComponent({
       <div class="mx-auto max-w-7xl py-2 md:py-6 sm:px-6 lg:px-8 md:grid md:grid-cols-7 md:gap-6 mainHeight">
         <div class="px-4 sm:px-0 mt-5 md:col-span-3 md:mt-0">
           <div class="overflow-auto rounded-lg border border-gray-200 shadow-md emailsHeight">
-            <ItemsComponent @setItem="setItem" :itemSelected="itemSelected" @setTotalEmails="setTotalEmails"/>
+            <ItemsComponent @setItem="setItem" :itemSelected="itemSelected" @setTotalEmails="setTotalEmails"
+                            :textSearch="textSearch"/>
           </div>
         </div>
         <div class="md:col-span-4 px-4 sm:px-0 mt-5 md:mt-0">
