@@ -4,7 +4,7 @@
 
 **[Linkedin Profile](https://www.linkedin.com/in/pauljacome/)**
 
-![Product_Png](https://raw.githubusercontent.com/ankalago/enron-mail-back/main/screenshot.png)
+![Product_Png](https://raw.githubusercontent.com/ankalago/enron-mail-front/main/public/screenshot.png)
 
 # Vue 3 + TypeScript + Vite
 
