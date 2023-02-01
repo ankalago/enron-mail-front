@@ -52,7 +52,7 @@ export default defineComponent({
         <div class="grid grid-cols-2 gap-6">
           <div class="col-span-3">
             <div class="mt-1 flex rounded-md shadow-sm">
-              <InputComponent :placeHolder="`search`" @customChange="setSearch" :customClass="`rounded-md`"/>
+              <InputComponent :placeHolder="`Filter by text in content`" @customChange="setSearch" :customClass="`rounded-md`"/>
             </div>
           </div>
         </div>

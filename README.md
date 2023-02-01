@@ -1,8 +1,14 @@
 # Test
 
-## Paul Jacome - Quito - Ecuador
+## Paul Jácome - Quito - Ecuador - Software Web Developer
 
-**[Linkedin Profile](https://www.linkedin.com/in/pauljacome/)**
+**[Linkedin Profile](https://bit.ly/paul-jacome-linkedin)**
+
+**[GitHub Profile](https://bit.ly/paul-jacome-github)**
+
+**[Bitbucket Profile](https://bit.ly/paul-jacome-bitbucket)**
+
+**[Whatsapp Profile](https://bit.ly/paul-jacome-whatsapp)**
 
 ![Product_Png](https://raw.githubusercontent.com/ankalago/enron-mail-front/main/public/screenshot.png)
 

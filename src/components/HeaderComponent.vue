@@ -6,10 +6,8 @@
           <div class="flex-shrink-0">
             <EmailIcon width="32" height="32" alt="Your Company"/>
           </div>
-          <div class="hidden md:block">
-            <div class="ml-10 flex items-baseline space-x-4">
-              <h1 class="text-3xl font-bold tracking-tight text-gray-100">Mamuro Email ({{ totalEmails }})</h1>
-            </div>
+          <div class="ml-2 sm:ml-10 flex items-baseline sm:space-x-4">
+            <h1 class="hidden sm:block text-2xl md:text-3xl font-bold tracking-tight text-gray-100">Mamuro Email</h1> <span class="text-2xl md:text-3xl font-bold tracking-tight text-gray-100">({{ totalEmails }})</span>
           </div>
         </div>
         <div class="-mr-2 flex">
