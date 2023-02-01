@@ -15,18 +15,19 @@ export default defineComponent({
     const itemSelected = ref<ItemSelectedType>({})
     const totalEmails = ref<number>(0)
     const textSearch = ref<string>("")
+    const textUser = ref<string>("")
 
-    const setSearch = (text: string) => {
-      textSearch.value = text
-    }
+    const setSearch = (text: string) =>
+        textSearch.value = text
 
-    const setItem = (item: ItemSelectedType) => {
-      itemSelected.value = item
-    }
+    const setUser = (text: string) =>
+        textUser.value = text
 
-    const setTotalEmails = (total: number) => {
-      totalEmails.value = total
-    }
+    const setItem = (item: ItemSelectedType) =>
+        itemSelected.value = item
+
+    const setTotalEmails = (total: number) =>
+        totalEmails.value = total
 
     return {
       setItem,
@@ -34,7 +35,9 @@ export default defineComponent({
       setTotalEmails,
       totalEmails,
       setSearch,
-      textSearch
+      textSearch,
+      textUser,
+      setUser
     }
   }
 })
@@ -42,7 +45,7 @@ export default defineComponent({
 
 <template>
   <div class="min-h-full">
-    <HeaderComponent :totalEmails="totalEmails"/>
+    <HeaderComponent :totalEmails="totalEmails" @setUser="setUser"/>
 
     <header class="bg-white shadow">
       <div class="mx-auto max-w-7xl py-6 px-4 sm:px-6 lg:px-8">
@@ -61,7 +64,7 @@ export default defineComponent({
         <div class="px-4 sm:px-0 mt-5 md:col-span-3 md:mt-0">
           <div class="overflow-auto rounded-lg border border-gray-200 shadow-md emailsHeight">
             <ItemsComponent @setItem="setItem" :itemSelected="itemSelected" @setTotalEmails="setTotalEmails"
-                            :textSearch="textSearch"/>
+                            :textSearch="textSearch" :textUser="textUser"/>
           </div>
         </div>
         <div class="md:col-span-4 px-4 sm:px-0 mt-5 md:mt-0">

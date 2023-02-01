@@ -15,8 +15,9 @@
         <div class="-mr-2 flex">
           <div class="col-span-3 sm:col-span-2">
             <div class="mt-1 flex rounded-md shadow-sm">
-              <InputComponent :placeHolder="`user (ex: arora-h)`" :customClass="`rounded-l-md`"/>
-              <ButtonComponent text="Select"/>
+              <InputComponent :placeHolder="`user (ex: arora-h)`" :customClass="`rounded-l-md`"
+                              @customChange="setTextUser"/>
+              <ButtonComponent text="Select" :onClick="onClick"/>
             </div>
           </div>
         </div>
@@ -25,18 +26,35 @@
   </Disclosure>
 </template>
 
-<script>
-import {Disclosure} from '@headlessui/vue'
+<script lang="ts">
+import { Disclosure } from '@headlessui/vue'
 import EmailIcon from './icons/EmailIcon.vue';
 import ButtonComponent from './ButtonComponent.vue';
 import InputComponent from './InputComponent.vue';
+import { defineComponent } from 'vue';
 
-export default {
+export default defineComponent({
   name: "HeaderComponent",
   props: {
-    totalEmails: Number
+    totalEmails: Number,
+    textUser: String
   },
-  components: { InputComponent, Disclosure, EmailIcon, ButtonComponent }
-}
+  components: { InputComponent, Disclosure, EmailIcon, ButtonComponent },
+  emits: ['setUser'],
+  methods: {
+    setTextUser(text: string) {
+      this.textUser = text
+    },
+    onClick() {
+      this.$emit('setUser', this.textUser)
+    }
+  },
+  setup() {
+    const textUser: string = ""
+    return {
+      textUser
+    }
+  }
+})
 </script>
 
