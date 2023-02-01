@@ -66,7 +66,7 @@ export default defineComponent({
         </div>
         <div class="md:col-span-4 px-4 sm:px-0 mt-5 md:mt-0">
           <div class="overflow-auto rounded-lg border border-gray-200 shadow-md p-5 emailsHeight">
-            <ItemComponent v-if="itemSelected.origin" :itemSelected="itemSelected"/>
+            <ItemComponent v-if="itemSelected.origin" :itemSelected="itemSelected" :textSearch="textSearch"/>
             <span v-else class="h-full flex items-center justify-center text-gray-500 font-bold text-2xl">Select the email</span>
           </div>
         </div>

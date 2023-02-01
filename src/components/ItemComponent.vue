@@ -1,6 +1,6 @@
 <template>
   <div class="text-sm text-gray-500">
-    <div v-html="sanitizeText(itemSelected.content)">
+    <div v-html="boldText(sanitizeText(itemSelected.content))">
     </div>
   </div>
 </template>
@@ -15,14 +15,20 @@ export default defineComponent({
     itemSelected: {
       type: Object as PropType<ItemSelectedType>,
       required: true
-    }
+    },
+    textSearch: String
   },
-  setup() {
+  setup(props) {
     const sanitizeText = (text?: string) =>
         text?.replaceAll("\n", "<br />")
 
+    const boldText = (text?: string) => {
+      return props.textSearch ? text?.toLowerCase().replace(props.textSearch.toLowerCase(), `<span class="text-rose-500 font-bold">${props.textSearch}</span>`) : text
+    }
+
     return {
-      sanitizeText
+      sanitizeText,
+      boldText
     }
   }
 })
